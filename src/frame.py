@@ -1,17 +1,21 @@
 import time
+from .objects.BaseObject import BaseObject
 from .utils.screen import clearScreen
 import os
 
 """
 A frame object that decides how to and what to draw on the screen
 """
+alphabet = "abcdefghijklmnopqrstuvwxyz"
 class Frame:
     def __init__(self):
-        self._objects = []
-        self._FPS = 20
+        self._objects: list[BaseObject] = []
+        self._FPS = 15
         terminalSize = os.get_terminal_size()
         self._width = terminalSize.columns
         self._height = terminalSize.lines
+        # Frame is simply a 2D list that represents each "pixel" in the screen
+        self._frame = [[' ' for _ in range(self._width)] for i in range(self._height)]
 
     def addObject(self, obj):
         """
@@ -25,11 +29,23 @@ class Frame:
         """
         self._FPS = fps
 
+    @staticmethod
+    def getFrame(frame) -> str:
+        """
+        Converts the frame object to a string
+        """
+        # Get a copy of the frame
+        frame: list[list[str]] = list(frame)
+        rows: list[str] = [''.join(row) for row in frame]
+        return '\n'.join(rows)
+
     def draw(self):
         """
         This method draws each frame
         """
-        print(f"{self._width}x{self._height}")
+        # Get a copy of the frame
+        frameScreen = self.getFrame(self._frame)
+        print(frameScreen)
 
     def start(self):
         """
