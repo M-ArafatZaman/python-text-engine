@@ -29,9 +29,6 @@ class RectangleObject(BaseObject):
         self.static = static
         self._char = char
 
-    def update(self, delta: int):
-        pass
-
     def requestFrame(self, frame: FrameInstance, frameWidth: int, frameHeight: int):
         """
         Draw the rectangle onto the frame
@@ -45,4 +42,4 @@ class RectangleObject(BaseObject):
             return
         
 
-        
+

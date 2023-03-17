@@ -1,4 +1,5 @@
 from ..TYPES import FrameInstance
+from typing import Callable
 
 """
 An abstract base object that defines each component on the screen
@@ -9,12 +10,18 @@ class BaseObject:
             canBeRendered = True,
     ):
         self._canBeRendered = canBeRendered
+        self._updateFn: list[ Callable[[int]] ] = []
 
-    def update(self, delta: int):
+    def update(self, fn: Callable):
         """
-        A method to update the object
+        A decorator to add a function that is executed whenever the Frame requests an update
+        
+        The decorated function will also have access to instance context
         """
-        raise NotImplementedError("update() is not implemented. Either this is an abstract class or it has not been implemented yet.")
+        def decoratedFn(self, *args, **kwargs):
+            fn(self, *args, **kwargs)
+        self._updateFn.append(decoratedFn)
+        return decoratedFn
 
     def requestFrame(self, frame: FrameInstance, frameWidth: int, frameHeight: int):
         """
