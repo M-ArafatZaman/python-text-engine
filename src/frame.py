@@ -11,9 +11,10 @@ class Frame:
     def __init__(self):
         self._objects: list[BaseObject] = []
         self._FPS = 15
-        self.updateDimensions()
         # Frame is simply a 2D list that represents each "pixel" in the screen
-        self._frame: FrameInstance = [[' ' for _ in range(self._width)] for i in range(self._height)]
+        self._frame: FrameInstance = [[]]
+        self.updateDimensions()
+        self.clearFrame()
 
     def addObject(self, obj):
         """
@@ -45,6 +46,12 @@ class Frame:
         rows: list[str] = [''.join(row) for row in frame]
         return '\n'.join(rows)
 
+    def clearFrame(self):
+        """
+        Clears the frame instance
+        """
+        self._frame: FrameInstance = [[' ' for _ in range(self._width)] for i in range(self._height)]
+
     def draw(self, delta:int):
         """
         This method draws each frame
@@ -69,6 +76,7 @@ class Frame:
             # Clear screen and update terminal size
             clearScreen()
             self.updateDimensions()
+            self.clearFrame()
             self.draw(delta)
 
             time.sleep(delta)
