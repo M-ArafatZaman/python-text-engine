@@ -16,7 +16,7 @@ class BaseObject:
         """
         raise NotImplementedError("update() is not implemented. Either this is an abstract class or it has not been implemented yet.")
 
-    def requestFrame(self, frame: FrameInstance):
+    def requestFrame(self, frame: FrameInstance, frameWidth: int, frameHeight: int):
         """
         A method to request a frame instance of an object.
         The frame instance will allow the frame to draw the element

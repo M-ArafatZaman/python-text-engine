@@ -7,7 +7,6 @@ from .TYPES import FrameInstance
 """
 A frame object that decides how to and what to draw on the screen
 """
-alphabet = "abcdefghijklmnopqrstuvwxyz"
 class Frame:
     def __init__(self):
         self._objects: list[BaseObject] = []
@@ -54,7 +53,7 @@ class Frame:
         for obj in self._objects:
             if obj._canBeRendered:
                 obj.update()
-                obj.requestFrame(self._frame)
+                obj.requestFrame(self._frame, self._width, self._height)
 
         # Get a copy of the frame
         frameScreen = self.getFrame(self._frame)
