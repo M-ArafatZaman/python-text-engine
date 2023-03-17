@@ -45,14 +45,14 @@ class Frame:
         rows: list[str] = [''.join(row) for row in frame]
         return '\n'.join(rows)
 
-    def draw(self):
+    def draw(self, delta:int):
         """
         This method draws each frame
         """
         # Update each object
         for obj in self._objects:
             if obj._canBeRendered:
-                obj.update()
+                obj.performUpdates(delta)
                 obj.requestFrame(self._frame, self._width, self._height)
 
         # Get a copy of the frame
@@ -69,7 +69,7 @@ class Frame:
             # Clear screen and update terminal size
             clearScreen()
             self.updateDimensions()
-            self.draw()
+            self.draw(delta)
 
             time.sleep(delta)
             

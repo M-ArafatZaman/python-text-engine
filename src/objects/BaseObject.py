@@ -10,7 +10,7 @@ class BaseObject:
             canBeRendered = True,
     ):
         self._canBeRendered = canBeRendered
-        self._updateFn: list[ Callable[[int]] ] = []
+        self._updateFn: list[ Callable[[BaseObject, int]] ] = []
 
     def update(self, fn: Callable):
         """
@@ -22,6 +22,12 @@ class BaseObject:
             fn(self, *args, **kwargs)
         self._updateFn.append(decoratedFn)
         return decoratedFn
+    
+    def performUpdates(self, delta:int):
+        """
+        The function that is called to perform all the updates attached to this base object
+        """
+        [update(self, delta) for update in self._updateFn]
 
     def requestFrame(self, frame: FrameInstance, frameWidth: int, frameHeight: int):
         """
