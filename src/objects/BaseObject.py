@@ -1,3 +1,5 @@
+from ..TYPES import FrameInstance
+
 """
 An abstract base object that defines each component on the screen
 """
@@ -8,17 +10,17 @@ class BaseObject:
     ):
         self._canBeRendered = canBeRendered
 
-    def update(self):
+    def update(self, delta: int):
         """
         A method to update the object
         """
-        pass
+        raise NotImplementedError("update() is not implemented. Either this is an abstract class or it has not been implemented yet.")
 
-    def requestFrame(self):
+    def requestFrame(self, frame: FrameInstance):
         """
         A method to request a frame instance of an object.
         The frame instance will allow the frame to draw the element
         """
-        pass
+        raise NotImplementedError("update() is not implemented. Either this is an abstract class or it has not been implemented yet.")
     
     

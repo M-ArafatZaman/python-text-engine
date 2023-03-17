@@ -2,6 +2,7 @@ import time
 from .objects.BaseObject import BaseObject
 from .utils.screen import clearScreen
 import os
+from .TYPES import FrameInstance
 
 """
 A frame object that decides how to and what to draw on the screen
@@ -11,11 +12,9 @@ class Frame:
     def __init__(self):
         self._objects: list[BaseObject] = []
         self._FPS = 15
-        terminalSize = os.get_terminal_size()
-        self._width = terminalSize.columns
-        self._height = terminalSize.lines
         # Frame is simply a 2D list that represents each "pixel" in the screen
-        self._frame = [[' ' for _ in range(self._width)] for i in range(self._height)]
+        self._frame: FrameInstance = [[' ' for _ in range(self._width)] for i in range(self._height)]
+        self.updateDimensions()
 
     def addObject(self, obj):
         """
@@ -28,6 +27,14 @@ class Frame:
         Update FPS
         """
         self._FPS = fps
+
+    def updateDimensions(self):
+        """
+        Method to update the dimensions
+        """
+        terminalSize = os.get_terminal_size()
+        self._width = terminalSize.columns
+        self._height = terminalSize.lines
 
     @staticmethod
     def getFrame(frame) -> str:
@@ -43,6 +50,12 @@ class Frame:
         """
         This method draws each frame
         """
+        # Update each object
+        for obj in self._objects:
+            if obj._canBeRendered:
+                obj.update()
+                obj.requestFrame(self._frame)
+
         # Get a copy of the frame
         frameScreen = self.getFrame(self._frame)
         print(frameScreen)
@@ -56,9 +69,7 @@ class Frame:
         while True:
             # Clear screen and update terminal size
             clearScreen()
-            terminalSize = os.get_terminal_size()
-            self._width = terminalSize.columns
-            self._height = terminalSize.lines
+            self.updateDimensions()
             self.draw()
 
             time.sleep(delta)
