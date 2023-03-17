@@ -11,9 +11,9 @@ class Frame:
     def __init__(self):
         self._objects: list[BaseObject] = []
         self._FPS = 15
+        self.updateDimensions()
         # Frame is simply a 2D list that represents each "pixel" in the screen
         self._frame: FrameInstance = [[' ' for _ in range(self._width)] for i in range(self._height)]
-        self.updateDimensions()
 
     def addObject(self, obj):
         """

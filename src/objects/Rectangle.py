@@ -41,5 +41,7 @@ class RectangleObject(BaseObject):
         if self.y > frameHeight or (self.y + self._height) < 0:
             return
         
-
+        for y in range(max(self.y, 0), min(self.y + self._height, frameHeight-1)):
+            for x in range(max(self.x, 0), min(self.x + self._width, frameWidth - 1)):
+                frame[y][x] = self._char
 
