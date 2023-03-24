@@ -1,5 +1,6 @@
-from src.frame import Frame
+from src.frame.frame import Frame
 from src.objects.Rectangle import RectangleObject
+from src.controller.controller import KeyboardController
 
 app = Frame()
 
@@ -9,5 +10,29 @@ Square = RectangleObject(
 )
 
 app.addObject(Square)
+
+controller = KeyboardController()
+app.registerExtension(controller)
+
+@Square.update
+@controller.on_press("w")
+def moveUp(obj: RectangleObject):
+    obj.y -= 1
+
+@Square.update
+@controller.on_press("s")
+def moveDown(obj: RectangleObject):
+    obj.y += 1
+
+@Square.update
+@controller.on_press("a")
+def moveLeft(obj: RectangleObject):
+    obj.x -= 1
+
+@Square.update
+@controller.on_press("d")
+def move_right(obj: RectangleObject):
+    obj.x += 1
+
 
 app.start()

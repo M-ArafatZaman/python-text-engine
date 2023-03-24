@@ -1,8 +1,9 @@
 import time
-from .objects.BaseObject import BaseObject
-from .utils.screen import clearScreen
+from ..objects.BaseObject import BaseObject
+from ..utils.screen import clearScreen
 import os
-from .TYPES import FrameInstance
+from ..TYPES import FrameInstance
+from .FrameExtension import FrameExtension
 
 """
 A frame object that decides how to and what to draw on the screen
@@ -15,6 +16,8 @@ class Frame:
         self._frame: FrameInstance = [[]]
         self.updateDimensions()
         self.clearFrame()
+        # Some third party components that can be attached to the frame
+        self._extensions: list[FrameExtension] = []
 
     def addObject(self, obj):
         """
@@ -52,14 +55,14 @@ class Frame:
         """
         self._frame: FrameInstance = [[' ' for _ in range(self._width)] for i in range(self._height)]
 
-    def draw(self, delta:int):
+    def draw(self):
         """
         This method draws each frame
         """
         # Update each object
         for obj in self._objects:
             if obj._canBeRendered:
-                obj.performUpdates(delta)
+                obj.performUpdates()
                 obj.requestFrame(self._frame, self._width, self._height)
 
         # Get a copy of the frame
@@ -77,7 +80,19 @@ class Frame:
             clearScreen()
             self.updateDimensions()
             self.clearFrame()
-            self.draw(delta)
+            # Update all extensions
+            for ext in self._extensions:
+                ext.requestUpdate()
+
+            self.draw()
 
             time.sleep(delta)
+
+    def registerExtension(self, ext: FrameExtension):
+        """
+        Add an extension to the frame
+        """
+        self._extensions.append(ext)
+
+
             

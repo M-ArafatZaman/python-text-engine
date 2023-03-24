@@ -23,11 +23,11 @@ class BaseObject:
         self._updateFn.append(decoratedFn)
         return decoratedFn
     
-    def performUpdates(self, delta:int):
+    def performUpdates(self):
         """
         The function that is called to perform all the updates attached to this base object
         """
-        [update(self, delta) for update in self._updateFn]
+        [update(self) for update in self._updateFn]
 
     def requestFrame(self, frame: FrameInstance, frameWidth: int, frameHeight: int):
         """
