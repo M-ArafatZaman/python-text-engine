@@ -38,9 +38,9 @@ class RectangleObject(BaseObject):
         We need to consider that x and y can be outside of the screen,
         In which case we ignore any render
         """
-        if self.x > frameWidth or (self.x + self._width) < 0:
+        if self.x >= frameWidth or (self.x + self._width) < 0:
             return
-        if self.y > frameHeight or (self.y + self._height) < 0:
+        if self.y >= frameHeight or (self.y + self._height) < 0:
             return
         
         START_Y = max(self.y, 0)
@@ -65,4 +65,16 @@ class RectangleObject(BaseObject):
             for x in range(START_X, END_X):
                 frame[START_Y][x] = "x"
                 frame[END_Y-1][x] = "x"
+
+    def moveUp(self, length=1):
+        self.y -= length
+
+    def moveDown(self, length=1):
+        self.y += length
+    
+    def moveLeft(self, length=1):
+        self.x -= length
+    
+    def moveRight(self, length=1):
+        self.x += length
 

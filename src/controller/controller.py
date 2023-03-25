@@ -20,12 +20,6 @@ class KeyboardController(FrameExtension):
         )
         listener.start()
 
-    def requestUpdate(self):
-        """
-        Every frame updates what character is currently active
-        """
-        pass
-
     def on_press(self, key: str):
         if len(key) != 1:
             raise Exception("Can only listen for one character updates.")

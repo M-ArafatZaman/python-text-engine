@@ -17,22 +17,22 @@ app.registerExtension(controller)
 @Square.update
 @controller.on_press("w")
 def moveUp(obj: RectangleObject):
-    obj.y -= 1
+    Square.moveUp()
 
 @Square.update
 @controller.on_press("s")
 def moveDown(obj: RectangleObject):
-    obj.y += 1
+    Square.moveDown()
 
 @Square.update
 @controller.on_press("a")
 def moveLeft(obj: RectangleObject):
-    obj.x -= 1
+    Square.moveLeft()
 
 @Square.update
 @controller.on_press("d")
 def move_right(obj: RectangleObject):
-    obj.x += 1
+    Square.moveRight()
 
 
 app.start()
