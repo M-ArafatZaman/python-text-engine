@@ -6,7 +6,7 @@ app = Frame()
 
 Square = RectangleObject(
     x=10, y=10,
-    width=10, height=10, fill=False
+    width=.5, height=.5, fill=False
 )
 
 app.addObject(Square)

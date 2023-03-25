@@ -38,15 +38,25 @@ class RectangleObject(BaseObject):
         We need to consider that x and y can be outside of the screen,
         In which case we ignore any render
         """
-        if self.x >= frameWidth or (self.x + self._width) < 0:
+        # Check if the width is supposed to be dynamic
+        width = self._width
+        height = self._height
+
+        if width < 1:
+            width = int(width * frameWidth)
+        
+        if height < 1:
+            height = int(height * frameHeight)
+
+        if self.x >= frameWidth or (self.x + width) < 0:
             return
-        if self.y >= frameHeight or (self.y + self._height) < 0:
+        if self.y >= frameHeight or (self.y + height) < 0:
             return
         
         START_Y = max(self.y, 0)
-        END_Y = min(self.y + self._height, frameHeight-1)
+        END_Y = min(self.y + height, frameHeight-1)
         START_X = max(self.x, 0)
-        END_X = min(self.x + self._width, frameWidth - 1)
+        END_X = min(self.x + width, frameWidth - 1)
         
         if self._fill:
             # Print the entire grid
@@ -66,6 +76,7 @@ class RectangleObject(BaseObject):
                 frame[START_Y][x] = "x"
                 frame[END_Y-1][x] = "x"
 
+    # Methods to move the rectangle
     def moveUp(self, length=1):
         self.y -= length
 
