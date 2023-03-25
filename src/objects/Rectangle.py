@@ -45,17 +45,17 @@ class RectangleObject(BaseObject):
         y = self.y
 
         # Check if the x and y is supposed to by dynamic
-        if x < 1:
+        if x <= 1:
             x = int(self.x * self.FRAME_WIDTH)
         
-        if y < 1:
+        if y <= 1:
             y = int(self.y * self.FRAME_HEIGHT)
 
         # Check if the width is supposed to be dynamic
-        if width < 1:
+        if width <= 1:
             width = int(width * self.FRAME_WIDTH)
         
-        if height < 1:
+        if height <= 1:
             height = int(height * self.FRAME_HEIGHT)
 
         # Check if the rectangle is still within the bounds of the frame
@@ -79,13 +79,13 @@ class RectangleObject(BaseObject):
             # Print the borders
             # Vertifcal borders
             for y in range(START_Y, END_Y):
-                frame[y][START_X] = 'Y'
-                frame[y][END_X-1] = 'Y'
+                frame[y][START_X] = self._char
+                frame[y][END_X-1] = self._char
             
             # Horizontal borders
             for x in range(START_X, END_X):
-                frame[START_Y][x] = "x"
-                frame[END_Y-1][x] = "x"
+                frame[START_Y][x] = self._char
+                frame[END_Y-1][x] = self._char
 
     # Methods to move the rectangle
     def moveUp(self, length=1):
