@@ -19,7 +19,7 @@ class Frame:
         # Some third party components that can be attached to the frame
         self._extensions: list[FrameExtension] = []
 
-    def addObject(self, obj):
+    def addObject(self, obj: BaseObject):
         """
         Add an object to the frame
         """
@@ -62,8 +62,8 @@ class Frame:
         # Update each object
         for obj in self._objects:
             if obj._canBeRendered:
-                obj.performUpdates()
-                obj.requestFrame(self._frame, self._width, self._height)
+                obj.performUpdates(self._width, self._height)
+                obj.requestFrame(self._frame)
 
         # Get a copy of the frame
         frameScreen = self.getFrame(self._frame)

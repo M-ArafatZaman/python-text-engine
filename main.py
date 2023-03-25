@@ -5,7 +5,7 @@ from src.controller.controller import KeyboardController
 app = Frame()
 
 Square = RectangleObject(
-    x=10, y=10,
+    x=.2, y=.2,
     width=.5, height=.5, fill=False
 )
 

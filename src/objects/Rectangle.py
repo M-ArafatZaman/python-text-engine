@@ -31,32 +31,43 @@ class RectangleObject(BaseObject):
         self._char = char
         self._fill = fill
 
-    def requestFrame(self, frame: FrameInstance, frameWidth: int, frameHeight: int):
+    def requestFrame(self, frame: FrameInstance):
         """
         Draw the rectangle onto the frame
         
         We need to consider that x and y can be outside of the screen,
         In which case we ignore any render
         """
-        # Check if the width is supposed to be dynamic
         width = self._width
         height = self._height
 
+        x = self.x
+        y = self.y
+
+        # Check if the x and y is supposed to by dynamic
+        if x < 1:
+            x = int(self.x * self.FRAME_WIDTH)
+        
+        if y < 1:
+            y = int(self.y * self.FRAME_HEIGHT)
+
+        # Check if the width is supposed to be dynamic
         if width < 1:
-            width = int(width * frameWidth)
+            width = int(width * self.FRAME_WIDTH)
         
         if height < 1:
-            height = int(height * frameHeight)
+            height = int(height * self.FRAME_HEIGHT)
 
-        if self.x >= frameWidth or (self.x + width) < 0:
+        # Check if the rectangle is still within the bounds of the frame
+        if x >= self.FRAME_WIDTH or (x + width) < 0:
             return
-        if self.y >= frameHeight or (self.y + height) < 0:
+        if y >= self.FRAME_HEIGHT or (y + height) < 0:
             return
         
-        START_Y = max(self.y, 0)
-        END_Y = min(self.y + height, frameHeight-1)
-        START_X = max(self.x, 0)
-        END_X = min(self.x + width, frameWidth - 1)
+        START_Y = max(y, 0)
+        END_Y = min(y + height, self.FRAME_HEIGHT-1)
+        START_X = max(x, 0)
+        END_X = min(x + width, self.FRAME_WIDTH - 1)
         
         if self._fill:
             # Print the entire grid
@@ -78,14 +89,18 @@ class RectangleObject(BaseObject):
 
     # Methods to move the rectangle
     def moveUp(self, length=1):
-        self.y -= length
+        if self.y < 1: self.y -= length/self.FRAME_HEIGHT
+        else: self.y -= length
 
     def moveDown(self, length=1):
-        self.y += length
-    
+        if self.y < 1: self.y += length/self.FRAME_HEIGHT
+        else: self.y += length
+
     def moveLeft(self, length=1):
-        self.x -= length
+        if self.x < 1: self.x -= length/self.FRAME_WIDTH 
+        else: self.x -= length
     
     def moveRight(self, length=1):
-        self.x += length
+        if self.x < 1: self.x += length/self.FRAME_WIDTH
+        else: self.x += length
 

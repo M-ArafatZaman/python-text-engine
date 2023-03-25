@@ -11,6 +11,8 @@ class BaseObject:
     ):
         self._canBeRendered = canBeRendered
         self._updateFn: list[ Callable[[BaseObject, int]] ] = []
+        self.FRAME_WIDTH: int | None = None
+        self.FRAME_HEIGHT: int | None = None
 
     def update(self, fn: Callable):
         """
@@ -23,13 +25,15 @@ class BaseObject:
         self._updateFn.append(decoratedFn)
         return decoratedFn
     
-    def performUpdates(self):
+    def performUpdates(self, frameWidth: int, frameHeight: int):
         """
         The function that is called to perform all the updates attached to this base object
         """
+        self.FRAME_WIDTH = frameWidth
+        self.FRAME_HEIGHT = frameHeight
         [update(self) for update in self._updateFn]
 
-    def requestFrame(self, frame: FrameInstance, frameWidth: int, frameHeight: int):
+    def requestFrame(self, frame: FrameInstance):
         """
         A method to request a frame instance of an object.
         The frame instance will allow the frame to draw the element
