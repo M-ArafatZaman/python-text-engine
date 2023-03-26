@@ -18,7 +18,7 @@ class LineObject(BaseObject):
         x2: int = 0,
         y2: int = 0,
         static: bool = True,
-        char: str = "#"
+        char: str = "-"
     ):
         super().__init__(canBeRendered)
         self.x1 = x1
@@ -66,12 +66,22 @@ class LineObject(BaseObject):
         # Some maths
         inverse_gradient = (x2-x1)/(y2-y1)
 
-        START_Y = max(min(y1,y2), 0)
-        END_Y = min(max(y1,y2), self.FRAME_HEIGHT-1)
+        START_Y = round(max(min(y1,y2), 0))
+        END_Y = round(min(max(y1,y2), self.FRAME_HEIGHT-1))
+        START_X = round(max(min(x1,x2), 0))
+        END_X = round(min(max(x1,x2), self.FRAME_WIDTH-1))
 
-        for y in range(round(START_Y), round(END_Y)):
-            x = inverse_gradient * y
-            if x >= 0 and x < self.FRAME_WIDTH:
-                frame[y][round(x)] = self._char
+        last_x = START_X
+        _x = -1
+        for y in range(START_Y, END_Y):
+            for x in range(last_x, END_X):
+                _x = round(inverse_gradient * y)
+
+                if _x > x:
+                    frame[y][x] = self._char
+                else:
+                    frame[y][_x] = self._char
+                    last_x = x+1
+                    break
 
 
