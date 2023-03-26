@@ -1,38 +1,18 @@
 from src.frame.frame import Frame
 from src.objects.Rectangle import RectangleObject
+from src.objects.Line import LineObject
 from src.controller.controller import KeyboardController
 
 app = Frame()
 
-Square = RectangleObject(
-    x=.2, y=.2,
-    width=1, height=1, fill=False
-)
-
-app.addObject(Square)
-
 controller = KeyboardController()
 app.registerExtension(controller)
 
-@Square.update
-@controller.on_press("w")
-def moveUp(obj: RectangleObject):
-    Square.moveUp()
+line = LineObject(
+    x1=.05, x2=.8,
+    y1=.05, y2=.5
+)
 
-@Square.update
-@controller.on_press("s")
-def moveDown(obj: RectangleObject):
-    Square.moveDown()
-
-@Square.update
-@controller.on_press("a")
-def moveLeft(obj: RectangleObject):
-    Square.moveLeft()
-
-@Square.update
-@controller.on_press("d")
-def move_right(obj: RectangleObject):
-    Square.moveRight()
-
+app.addObject(line)
 
 app.start()

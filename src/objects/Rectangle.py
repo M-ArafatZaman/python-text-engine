@@ -6,7 +6,7 @@ A rectangle object
 """
 class RectangleObject(BaseObject):
     """
-    A rectangle object is a static rectangle object that does has no physics
+    A rectangle object is a static rectangle object that has no physics
     The x and y coordinates are the top left corner of the rectangle.
     The width and height are measured in terms of columns and lines.
     The char is the character used to print the rectangle into the console
