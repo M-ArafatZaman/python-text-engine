@@ -1,5 +1,6 @@
 from .BaseObject import BaseObject
 from ..TYPES import FrameInstance
+from math import atan
 
 """
 A line object
