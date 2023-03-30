@@ -31,7 +31,7 @@ class BaseObject:
         """
         self.FRAME_WIDTH = frameWidth
         self.FRAME_HEIGHT = frameHeight
-        [update(self) for update in self._updateFn]
+        [update() for update in self._updateFn]
 
     def requestFrame(self, frame: FrameInstance):
         """
