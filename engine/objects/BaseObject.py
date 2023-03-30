@@ -20,8 +20,8 @@ class BaseObject:
         
         The decorated function will also have access to instance context
         """
-        def decoratedFn(self, *args, **kwargs):
-            fn(self, *args, **kwargs)
+        def decoratedFn(*args, **kwargs):
+            fn(*args, **kwargs)
         self._updateFn.append(decoratedFn)
         return decoratedFn
     

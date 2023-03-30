@@ -8,11 +8,31 @@ app = Frame()
 controller = KeyboardController()
 app.registerExtension(controller)
 
-line = LineObject(
-    x1=.05, x2=.8,
-    y1=.05, y2=.8
+obj = RectangleObject(
+    x=.1, y=.2,
+    width=5, height=10, fill=False
 )
 
-app.addObject(line)
+@obj.update
+@controller.on_press("w")
+def moveUp():
+    obj.moveUp(1)
+
+@obj.update
+@controller.on_press("s")
+def moveDown():
+    obj.moveDown(1)
+
+@obj.update
+@controller.on_press("a")
+def moveLeft():
+    obj.moveLeft(1)
+
+@obj.update
+@controller.on_press("d")
+def moveRight():
+    obj.moveRight(1)
+
+app.addObject(obj)
 
 app.start()
